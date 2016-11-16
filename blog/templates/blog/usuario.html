@@ -1,11 +1,8 @@
-<html>
-<head>
-</head>
-<body>
+{%extends 'blog/base.html'%}
+{%block content%}
   <p>Hola usuario</p>
   <a href="/salir" >salir</a>
   {%for libro in libros%}
   <p>{{libro}}</p>
   {%endfor%}
-</body>
-</html>
+{%endblock%}

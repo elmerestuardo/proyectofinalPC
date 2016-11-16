@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  <title>Biblioteca</title>
+  <script type="text/javascript">
+  $(function(){
+    $('ul.tabs').tabs();
+    $(".button-collapse").sideNav();
+    $('select').material_select();
+    $(".dropdown-button").dropdown({
+      hover: false,
+
+    });
+  });
+  </script>
+</head>
+<body>
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="/administrador/libros/agregar_autor">Agregar</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">Modificar</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">Eliminar</a></li>
+    <li class="divider"></li>
+  </ul>
+  <ul id="dropdown2" class="dropdown-content">
+    <li><a href="#!">Agregar</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">Modificar</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">Eliminar</a></li>
+    <li class="divider"></li>
+  </ul>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">Biblioteca</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/">Inicio</a></li>
+        <li><a class="dropdown-button" data-beloworigin="true" href="#!" data-activates="dropdown1">Libros<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Usuarios<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a href="/salir">Salir</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a href="/">Inicio</a></li>
+        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Libros<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Usuarios<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a href="/salir">Salir</a></li>
+      </ul>
+    </div>
+  </nav>
+  {%block content%}
+  {%endblock%}
+</body>
+</html>

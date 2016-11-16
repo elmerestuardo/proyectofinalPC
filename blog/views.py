@@ -3,12 +3,26 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User,Group
-#from .forms import ActividadForm,ResultadoForm,UsuarioForm
+from .forms import AutorForm
 from .models import Editorial, Autor, Libro
 from django.contrib.auth.hashers import make_password
 
 #def login(request):
 #    return render(request, 'blog/login.html', {})
+
+def agregar_autor(request):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        if request.method=="POST":
+            formulario = AutorForm(request.POST)
+            if formulario.is_valid():
+                autor = formulario.save(commit=False)
+                autor.save()
+                return redirect('/administrador')
+        else:
+            formulario=AutorForm()
+        return render(request, 'blog/agregar_autor.html', {'formulario':formulario})
+    else:
+        return redirect('/')
 
 def administrador(request):
     if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
@@ -29,7 +43,7 @@ def iniciar(request):
             if request.user.groups.all()[0].name == "Administrador":
                 return redirect('/administrador')
             elif request.user.groups.all()[0].name == "Usuario":
-                return redirect('/usuario')
+                return redirect('/usuario/libros/listado')
         else:
             logout(request)
             formulario = AuthenticationForm()
