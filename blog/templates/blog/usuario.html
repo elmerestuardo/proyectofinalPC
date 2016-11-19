@@ -1,7 +1,5 @@
 {%extends 'blog/base.html'%}
 {%block content%}
-  <p>Hola usuario</p>
-  <a href="/salir" >salir</a>
 
 <div id="libros" class="col s12">
   <table class="bordered highlight centered">
@@ -25,7 +23,7 @@
       </td>
       <td>{{libro.editorial}}</td>
       <td>{{libro.fecha_publicacion}}</td>
-      <td><a href="administrador/autores/eliminar_autor/{{libro.pk}}">Eliminar</a> <a href="administrador/autores/editar_autor/{{libro.pk}}">Modificar</a></td>
+      <td><a href="https://www.paypal.com/gt/webapps/mpp/home">Comprar</a></td>
     </tr>
       {%endfor%}
     </tbody>
