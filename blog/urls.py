@@ -17,7 +17,6 @@ urlpatterns = [
         url(r'^administrador/usuarios/listado$', views.listar_usuarios),
         url(r'^administrador/usuarios/eliminar_usuario/(?P<pk>[0-9]+)$', views.eliminar_usuario),
         url(r'^usuario/libros/listado$', views.usuario),
-        url(r'^usuario/libros/comprar$', views.comprar_libro),
         url(r'^salir$', views.salir),
         url(r'^administrador/autores/agregar_autor$', views.agregar_autor),
         url(r'^administrador/autores/editar_autor/(?P<pk>[0-9]+)$', views.editar_autor),
