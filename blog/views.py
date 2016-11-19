@@ -24,6 +24,20 @@ def agregar_autor(request):
     else:
         return redirect('/')
 
+def editar_autor(request,pk):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        autor = get_object_or_404(Autor,pk=pk)
+        if request.method=="POST":
+            formulario = AutorForm(request.POST,instance=autor)
+            if formulario.is_valid():
+                autor = formulario.save()
+                return redirect('/administrador')
+        else:
+            formulario=ResultadoForm(instance=resultado)
+        return render(request, 'agenda/resultado_modificar.html', {'formulario':formulario})
+    else:
+        return redirect('/')
+
 def administrador(request):
     if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
         usuarios = User.objects.all()

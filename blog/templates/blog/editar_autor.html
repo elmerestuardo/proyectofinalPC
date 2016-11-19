@@ -1,0 +1,35 @@
+{%extends 'blog/base_admin.html'%}
+{%block content%}
+<div class="row">
+  <div class="col s12 m6 offset-m3 l4 offset-l4">
+    <div class="card black-text">
+      <form method="POST">{% csrf_token %}
+      <div class="card-content">
+        <center><span class="card-title">Editar autor</span></center>
+        <br>
+        {{ formulario.non_field_errors }}
+        <div class="input-field">
+            {{ formulario.nombre.errors }}
+            <label for="{{ formulario.username.id_for_label }}">Nombre</label>
+            {{ formulario.nombre }}
+        </div>
+        <div class="input-field">
+            {{ formulario.apellidos.errors }}
+            <label for="{{ formulario.password.id_for_label }}">Apellido</label>
+            {{ formulario.apellidos }}
+        </div>
+        <div class="">
+            {{ formulario.email.errors }}
+            <label for="{{ formulario.groups.id_for_label }}">E-mail</label>
+            {{ formulario.email }}
+        </div>
+        <center><a href="/" class="btn waves-effect waves-light">Cancelar</a> <button class="btn waves-effect waves-light" type="submit">Guardar</button> </center>
+      </div>
+      <div class="card-action">
+        <p ><center class="red-text">{{ mensaje }}</center></p>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{%endblock%}
