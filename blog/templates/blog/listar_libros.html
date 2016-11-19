@@ -1,0 +1,32 @@
+{%extends 'blog/base_admin.html'%}
+{%block content%}
+
+<div id="libros" class="col s12">
+  <table class="bordered highlight centered">
+    <thead>
+      <tr>
+        <th>Titulo</th>
+        <th>Autores</th>
+        <th>Editorial</th>
+        <th>Fecha Publicacion</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for libro in libros%}
+      <tr>
+      <td>{{libro.titulo}}</td>
+      <td>
+        {%for autor in libro.autores.all%}
+        {{autor}}
+        {%endfor%}
+      </td>
+      <td>{{libro.editorial}}</td>
+      <td>{{libro.fecha_publicacion}}</td>
+      <td><a href="eliminar_libro/{{libro.pk}}">Eliminar</a> <a href="editar_libro/{{libro.pk}}">Modificar</a></td>
+    </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+{%endblock%}

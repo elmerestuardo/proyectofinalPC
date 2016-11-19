@@ -25,4 +25,4 @@ class UsuarioForm(forms.ModelForm):
         widgets = {
             'password':forms.PasswordInput,
             'groups': forms.SelectMultiple,
-}
+        }

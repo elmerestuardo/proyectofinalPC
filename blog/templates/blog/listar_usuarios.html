@@ -1,0 +1,30 @@
+{%extends 'blog/base_admin.html'%}
+{%block content%}
+<div class="row">
+    <div class="col s12">
+      <table class="bordered highlight centered">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Grupo</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for usuario in usuarios%}
+          <tr>
+          <td>{{usuario.username}}</td>
+          <td>
+            {%for grupo in usuario.groups.all%}
+            {{grupo}}
+            {%endfor%}
+          </td>
+          <td><a href="eliminar_usuario/{{usuario.pk}}">Eliminar</a> <a href="editar_usuario/{{usuario.pk}}">Modificar</a> </td>
+        </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{%endblock%}

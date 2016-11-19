@@ -3,7 +3,7 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User,Group
-from .forms import AutorForm
+from .forms import AutorForm, EditorialForm, LibroForm, UsuarioForm
 from .models import Editorial, Autor, Libro
 from django.contrib.auth.hashers import make_password
 
@@ -24,6 +24,54 @@ def agregar_autor(request):
     else:
         return redirect('/')
 
+def agregar_libro(request):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        if request.method=="POST":
+            formulario = LibroForm(request.POST)
+            if formulario.is_valid():
+                libro = formulario.save(commit=False)
+                libro.save()
+                return redirect('/administrador')
+        else:
+            formulario=LibroForm()
+        return render(request, 'blog/agregar_libro.html', {'formulario':formulario})
+    else:
+        return redirect('/')
+
+def agregar_editorial(request):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        if request.method=="POST":
+            formulario = EditorialForm(request.POST)
+            if formulario.is_valid():
+                editorial = formulario.save(commit=False)
+                editorial.save()
+                return redirect('/administrador')
+        else:
+            formulario=EditorialForm()
+        return render(request, 'blog/agregar_editorial.html', {'formulario':formulario})
+    else:
+        return redirect('/')
+
+def agregar_usuario(request):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        if request.method=="POST":
+            formulario = UsuarioForm(request.POST)
+            if formulario.is_valid():
+                if 'groups' in request.POST:
+                    grupo=get_object_or_404(Group,pk=request.POST["groups"])
+                    usuario = formulario.save(commit=False)
+                    usuario.password = make_password(usuario.password)
+                    usuario.save()
+                    grupo.user_set.add(usuario)
+                    return redirect('/')
+                else:
+                    return render(request, 'blog/agregar_usuario.html', {'formulario':formulario,'mensaje':'Se debe elegir un grupo'})
+        else:
+            formulario=UsuarioForm()
+        return render(request, 'blog/agregar_usuario.html', {'formulario':formulario,'mensaje':''})
+    else:
+        return redirect('/')
+
 def editar_autor(request,pk):
     if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
         autor = get_object_or_404(Autor,pk=pk)
@@ -33,8 +81,89 @@ def editar_autor(request,pk):
                 autor = formulario.save()
                 return redirect('/administrador')
         else:
-            formulario=ResultadoForm(instance=resultado)
-        return render(request, 'agenda/resultado_modificar.html', {'formulario':formulario})
+            formulario=AutorForm(instance=autor)
+        return render(request, 'blog/editar_autor.html', {'formulario':formulario})
+    else:
+        return redirect('/')
+
+def editar_libro(request,pk):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        libro = get_object_or_404(Libro,pk=pk)
+        if request.method=="POST":
+            formulario = LibroForm(request.POST,instance=libro)
+            if formulario.is_valid():
+                libro = formulario.save()
+                return redirect('/administrador')
+        else:
+            formulario=LibroForm(instance=libro)
+        return render(request, 'blog/editar_libro.html', {'formulario':formulario})
+    else:
+        return redirect('/')
+
+def editar_editorial(request,pk):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        editorial = get_object_or_404(Editorial,pk=pk)
+        if request.method=="POST":
+            formulario = EditorialForm(request.POST,instance=editorial)
+            if formulario.is_valid():
+                editorial = formulario.save()
+                return redirect('/administrador')
+        else:
+            formulario=EditorialForm(instance=editorial)
+        return render(request, 'blog/editar_editorial.html', {'formulario':formulario})
+    else:
+        return redirect('/')
+
+def editar_usuario(request,pk):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        usuario = get_object_or_404(User,pk=pk)
+        if request.method=="POST":
+            formulario = UsuarioForm(request.POST,instance=usuario)
+            if formulario.is_valid():
+                if 'groups' in request.POST:
+                    grupo=get_object_or_404(Group,pk=request.POST["groups"])
+                    usuario = formulario.save(commit=False)
+                    usuario.password = make_password(usuario.password)
+                    usuario.save()
+                    grupo.user_set.add(usuario)
+                    return redirect('/')
+                else:
+                    return render(request, 'blog/editar_usuario.html', {'formulario':formulario,'mensaje':'Se debe elegir un grupo'})
+        else:
+            formulario=UsuarioForm(instance=usuario)
+        return render(request, 'blog/editar_usuario.html', {'formulario':formulario,'mensaje':''})
+    else:
+        return redirect('/')
+
+def eliminar_autor(request,pk):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        autor = get_object_or_404(Autor,pk=pk)
+        autor.delete()
+        return redirect('/administrador')
+    else:
+        return redirect('/')
+
+def eliminar_libro(request,pk):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        libro = get_object_or_404(Libro,pk=pk)
+        libro.delete()
+        return redirect('/administrador')
+    else:
+        return redirect('/')
+
+def eliminar_editorial(request,pk):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        editorial = get_object_or_404(Editorial,pk=pk)
+        editorial.delete()
+        return redirect('/administrador')
+    else:
+        return redirect('/')
+
+def eliminar_usuario(request,pk):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        usuario = get_object_or_404(User,pk=pk)
+        usuario.delete()
+        return redirect('/administrador')
     else:
         return redirect('/')
 
@@ -48,6 +177,34 @@ def usuario(request):
     if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Usuario":
         libros=Libro.objects.all()
         return render(request, 'blog/usuario.html', {'libros':libros,})
+    else:
+        return redirect('/')
+
+def listar_autores(request):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        autores=Autor.objects.all()
+        return render(request, 'blog/listar_autores.html', {'autores':autores,})
+    else:
+        return redirect('/')
+
+def listar_libros(request):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        libros=Libro.objects.all()
+        return render(request, 'blog/listar_libros.html', {'libros':libros,})
+    else:
+        return redirect('/')
+
+def listar_editoriales(request):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        editoriales=Editorial.objects.all()
+        return render(request, 'blog/listar_editoriales.html', {'editoriales':editoriales,})
+    else:
+        return redirect('/')
+
+def listar_usuarios(request):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
+        usuarios=User.objects.all()
+        return render(request, 'blog/listar_usuarios.html', {'usuarios':usuarios,})
     else:
         return redirect('/')
 
