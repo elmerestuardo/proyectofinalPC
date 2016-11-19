@@ -1,32 +1,28 @@
 {%extends 'blog/base.html'%}
 {%block content%}
 
-<div id="libros" class="col s12">
-  <table class="bordered highlight centered">
-    <thead>
-      <tr>
-        <th>Titulo</th>
-        <th>Autores</th>
-        <th>Editorial</th>
-        <th>Fecha Publicacion</th>
-        <th>Opciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {%for libro in libros%}
-      <tr>
-      <td>{{libro.titulo}}</td>
-      <td>
-        {%for autor in libro.autores.all%}
-        {{autor}}
-        {%endfor%}
-      </td>
-      <td>{{libro.editorial}}</td>
-      <td>{{libro.fecha_publicacion}}</td>
-      <td><a href="https://www.paypal.com/gt/webapps/mpp/home">Comprar</a></td>
-    </tr>
-      {%endfor%}
-    </tbody>
-  </table>
+<p>Hola {{ usuario }}, bienvenido!</p>
+
+<div class="row">
+  <div class="col s12 m6 offset-m3 l4 offset-l4">
+    <div class="card">
+      <div class="card-image">
+        <center><img src="http://previews.123rf.com/images/anwarsikumbang/anwarsikumbang1502/anwarsikumbang150200450/36649744-Mann-avatar-Nutzerfoto-Zeichentrickfigur-Vektor-Illustration-Lizenzfreie-Bilder.jpg" style="width:200px; height:200px;"></center>
+      </div>
+      <div class="card-content">
+        <center>
+        <span class="card-title">{{ usuario }}</span>
+        <p>Grupos:
+          {%for grupo in usuario.groups.all%}
+          {{grupo}}
+          {%endfor%}
+        </p>
+      </center>
+      </div>
+      <div class="card-action">
+        <a href="/usuario/libros/listado">Ir a libros</a>
+      </div>
+    </div>
+  </div>
 </div>
 {%endblock%}

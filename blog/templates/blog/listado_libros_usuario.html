@@ -1,4 +1,4 @@
-{%extends 'blog/base_admin.html'%}
+{%extends 'blog/base.html'%}
 {%block content%}
 
 <div id="libros" class="col s12">
@@ -23,10 +23,11 @@
       </td>
       <td>{{libro.editorial}}</td>
       <td>{{libro.fecha_publicacion}}</td>
-      <td><a href="eliminar_libro/{{libro.pk}}">Eliminar</a> <a href="editar_libro/{{libro.pk}}">Modificar</a></td>
+      <td><a href="https://www.paypal.com/gt/webapps/mpp/home">Comprar</a></td>
     </tr>
       {%endfor%}
     </tbody>
   </table>
 </div>
+
 {%endblock%}

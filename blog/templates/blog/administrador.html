@@ -1,5 +1,28 @@
 {%extends 'blog/base_admin.html'%}
 {%block content%}
-<p>Hola administrador</p>
-<a href="/salir" >salir</a>
+<p>Hola {{ usuario }}, bienvenido!</p>
+
+<div class="row">
+  <div class="col s12 m6 offset-m3 l4 offset-l4">
+    <div class="card">
+      <div class="card-image">
+        <center><img src="http://previews.123rf.com/images/anwarsikumbang/anwarsikumbang1502/anwarsikumbang150200445/36649700-hombre-avatar-de-dibujos-animados-imagen-usuario-personaje-ilustraci-n-vectorial-Foto-de-archivo.jpg" style="width:200px; height:200px;"></center>
+      </div>
+      <div class="card-content">
+        <center>
+        <span class="card-title">{{ usuario }}</span>
+        <p>Grupos:
+          {%for grupo in usuario.groups.all%}
+          {{grupo}}
+          {%endfor%}
+        </p>
+      </center>
+      </div>
+      <div class="card-action">
+        <a href="administrador/usuarios/editar_usuario/{{ usuario.pk }}">Editar</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 {%endblock%}

@@ -169,14 +169,21 @@ def eliminar_usuario(request,pk):
 
 def administrador(request):
     if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Administrador":
-        usuarios = User.objects.all()
-        return render(request,'blog/administrador.html', {'usuarios':usuarios,})
+        usuario = request.user
+        return render(request,'blog/administrador.html', {'usuario':usuario,})
     else:
         return redirect('/')
 def usuario(request):
     if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Usuario":
+        usuario = request.user
+        return render(request, 'blog/usuario.html', {'usuario':usuario,})
+    else:
+        return redirect('/')
+
+def listado_libros_usuario(request):
+    if len(request.user.groups.all())>0 and request.user.groups.all()[0].name == "Usuario":
         libros=Libro.objects.all()
-        return render(request, 'blog/usuario.html', {'libros':libros,})
+        return render(request, 'blog/listado_libros_usuario.html', {'libros':libros,})
     else:
         return redirect('/')
 
@@ -214,7 +221,7 @@ def iniciar(request):
             if request.user.groups.all()[0].name == "Administrador":
                 return redirect('/administrador')
             elif request.user.groups.all()[0].name == "Usuario":
-                return redirect('/usuario/libros/listado')
+                return redirect('/usuario')
         else:
             logout(request)
             formulario = AuthenticationForm()
